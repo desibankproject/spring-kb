@@ -46,7 +46,8 @@
 			</tr>
 				<tr>
 				<td>&nbsp;</td>
-				<td><button type="submit" class="btn btn-primary">Check User</button></td>
+				<td><button type="submit" class="btn btn-primary">Check User</button> &nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/register.jsp"><button type="button" class="btn btn-primary">Sign Up</button></a></td>
+				<td></td>
 			</tr>
 		</table>
 		</form>

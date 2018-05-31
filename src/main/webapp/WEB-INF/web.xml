@@ -19,7 +19,7 @@
 	</listener>
 	
 	<welcome-file-list>
-		<welcome-file>palindrom.jsp</welcome-file>
+		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
    
    <!-- 
