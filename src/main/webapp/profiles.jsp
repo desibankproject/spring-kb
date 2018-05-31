@@ -42,7 +42,7 @@
         <td>${item.name}</td>
         <td>${item.email}</td>
           <td>${item.gender}</td>
-        <td>${item.gender}</td>
+        <td>${item.address}</td>
           <td>C soon</td>
         <td><a href="${pageContext.request.contextPath}/deleteEmployee?rowid=${item.rowid}"><img src="${pageContext.request.contextPath}/img/delete-test-icon.png"/></a></td>
       </tr>
