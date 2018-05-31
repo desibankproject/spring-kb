@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        
+        <!-- This is first bean of Food type -->
+		<bean  id="mfood"  class="com.model.Food"> 
+				<property name="name" value="Meat"/>
+				<property name="price" value="333"/>
+				<property name="description" value="This is fresh food!"/>
+		</bean>
+		
+		<!-- This is second bean of Food type -->
+		<bean  id="sfood"  class="com.model.Food"> 
+				<property name="name" value="Veg"/>
+				<property name="price" value="567"/>
+				<property name="description" value="This is not fresh food!"/>
+		</bean>
+		
+		<bean  id="mdog"  class="com.model.Dog"> 
+				<property name="color" value="white"/>
+				<property name="name" value="Tommy"/>
+				<property name="age" value="12"/>
+				<property name="food" ref="mfood"/>
+		</bean>
+		
+		
+		<bean  id="sdog"  class="com.model.Dog"> 
+				<property name="color" value="red"/>
+				<property name="name" value="Jommy"/>
+				<property name="age" value="5"/>
+				<property name="food" ref="sfood"/>
+		</bean>
+		
+		
+		
+
+</beans>

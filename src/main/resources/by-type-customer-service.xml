@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 
+			Bag frog=new Bag();
+	 -->
+	<!-- 	<bean  id="ccustomerDao"  class="com.spring.service.CustomerDao" scope="singleton"  primary="true">
+			<property name="name" value="WhiteCustomer"/> 
+		</bean> -->
+		
+		<bean  id="ccustomerDao"  class="com.spring.service.CustomerDao" scope="singleton"  autowire-candidate="false">
+			<property name="name" value="WhiteCustomer"/> 
+		</bean>
+		
+		
+		<bean  id="dcustomerDao"  class="com.spring.service.CustomerDao" scope="singleton">
+				<property name="name" value="RedCustomer"/> 
+		</bean>
+		
+		
+		<bean  id="customerService"  class="com.spring.service.CustomerService" scope="singleton" autowire="byType">
+				<property name="name" value="Mocha"/> 
+				<property name="serviceid" value="S93838378373"/>
+				<!-- <property name="customerDao" ref="ccustomerDao"/> -->
+		</bean>
+</beans>
