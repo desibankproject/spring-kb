@@ -14,4 +14,8 @@ public interface EmployeeDao {
 
 	public String deleteEmployeeByRowId(String rowid);
 
+	 public String updateEmployee(EmployeeEntity employeeEntity);
+
+	 public byte[] findImageRowid(int rowid);
+
 }

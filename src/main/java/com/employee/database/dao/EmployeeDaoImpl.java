@@ -1,5 +1,6 @@
 package com.employee.database.dao;
 
+import java.sql.Types;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -10,6 +11,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
+import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.stereotype.Repository;
 
 @Repository("EmployeeDaoImpl")
@@ -36,12 +40,38 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	 	 System.out.println("add employee method is called in dao layer!!!!!!");
 	 	 JdbcTemplate jdbcTemplate=new JdbcTemplate(dataSource);
 	 	 System.out.println(employeeEntity);
-	 	 String sql="insert into employee_tbl(empid,name,email,gender,address,doe) values(?,?,?,?,?,?)";
-	 	 Object[] args=new Object[]{employeeEntity.getEmpid(),employeeEntity.getName(),employeeEntity.getEmail(),employeeEntity.getGender(),employeeEntity.getAddress(),employeeEntity.getDoe()};
+	 	 //
+         
+	 	 LobHandler lobHandler=new DefaultLobHandler();
+         SqlLobValue sqlLobValue=new SqlLobValue(employeeEntity.getPhoto(),lobHandler);
+         
+         int[] dataType=new int[] { Types.VARCHAR, Types.VARCHAR,
+                 Types.VARCHAR, Types.VARCHAR,Types.BLOB,Types.VARCHAR,Types.TIMESTAMP };
+         
+	 	 String sql="insert into employee_tbl(empid,name,email,gender,photo,address,doe) values(?,?,?,?,?,?,?)";
+	 	 Object[] args=new Object[]{employeeEntity.getEmpid(),employeeEntity.getName(),employeeEntity.getEmail(),employeeEntity.getGender(),sqlLobValue,employeeEntity.getAddress(),employeeEntity.getDoe()};
+  	   	 jdbcTemplate.update(sql, args,dataType);
+		 return "success";
+	}
+	
+	@Override
+	public String updateEmployee(EmployeeEntity employeeEntity) {
+	 	 JdbcTemplate jdbcTemplate=new JdbcTemplate(dataSource);
+	 	 System.out.println(employeeEntity);
+	 	 String sql="update employee_tbl set  name=?,email=?,gender=?,address=? where empid=?";
+	 	 Object[] args=new Object[]{employeeEntity.getName(),employeeEntity.getEmail(),employeeEntity.getGender(),employeeEntity.getAddress(),employeeEntity.getEmpid()};
   	   	 jdbcTemplate.update(sql, args);
 		 return "success";
 	}
 
+
+	@Override
+	public byte[] findImageRowid(int rowid) {
+	 	 JdbcTemplate jdbcTemplate=new JdbcTemplate(dataSource);
+	 	 String sql="select photo from employee_tbl where rowid="+ rowid;
+	 	 byte[] image=jdbcTemplate.queryForObject(sql, byte[].class);
+	 	 return image;
+	}
 	
 	@Override
 	public List<EmployeeEntity> findEmployee(){

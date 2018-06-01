@@ -30,6 +30,9 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
+	
+	 <!-- This is spring bean  StandardServletMultipartResolver which will help you to upload your image-->
+     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
      
         
      </beans>   

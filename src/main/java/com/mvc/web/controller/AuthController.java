@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +35,18 @@ public class AuthController {
 	private  EmployeeService employeeService;
 	
 	
+	
 	public	AuthController(){
+		//	 <context-param>
+ 		///<param-name>contextConfigLocation</param-name>
+ 		//<param-value>classpath:employee-service-dao.xml</param-value>
+			///</context-param>
+		//<listener>
+		//<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>	
+	   //</listener>
+		//below is not right approach!!!!!!!!!!
+		/* ApplicationContext applicationContext=new ClassPathXmlApplicationContext("employee-service-dao.xml");
+		 EmployeeService employeeService=(EmployeeService)applicationContext.getBean("EmployeServiceImpl");*/
 	}
 	
 	//@PostMapping("/auth")

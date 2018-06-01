@@ -17,8 +17,20 @@ public class EmployeServiceImpl  implements EmployeeService{
 	private EmployeeDao employeeDao;
 	
 	@Override
+	 public byte[] findImageRowid(int rowid){
+		return employeeDao.findImageRowid( rowid);
+	 }
+	
+	@Override
 	public String authUser(String username,String password){
 		return employeeDao.authUser(username, password);
+	}
+	
+	@Override
+	public String updateEmployee(EmployeeEntity employeeEntity) {
+		System.out.println("Service layer updateEmployee method is called!");
+		String result=employeeDao.updateEmployee(employeeEntity);
+		return result;
 	}
 	
 	@Override

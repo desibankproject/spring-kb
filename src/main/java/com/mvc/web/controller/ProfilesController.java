@@ -1,8 +1,11 @@
 package com.mvc.web.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.employee.database.dao.EmployeeEntity;
 import com.employee.database.service.EmployeeService;
@@ -29,10 +33,34 @@ public class ProfilesController {
 		@Autowired
 		@Qualifier("EmployeServiceImpl")
 		private  EmployeeService employeeService;
+		
+		
+		
+		@PostMapping("/update-employee")
+		public String updateEmployee(@RequestParam("empid") String pempid,String name,String email,String gender,String address,Model model) {
+			 		EmployeeEntity employeeEntity=new EmployeeEntity();
+			 		employeeEntity.setAddress(address);
+			 		employeeEntity.setDoe(new Timestamp(new Date().getTime()));
+			 		employeeEntity.setEmail(email);
+			 		employeeEntity.setEmpid(pempid);
+			 		employeeEntity.setGender(gender);
+			 		employeeEntity.setName(name);
+			 		String status=employeeService.updateEmployee(employeeEntity);
+			 		System.out.println("response coming from service layer "+status);
+		 			model.addAttribute("appstatus","Congratulation! , you have update profile successfully");
+		 			//Here hey issue one senRedirect command for given url patten profiles
+		 			//Here it is not going to view resolver
+		 			return "redirect:/profiles";
+					
+		}
 	
 		@PostMapping("/register-employee")
-		public String registerEmployee(@RequestParam("empid") String pempid,String name,String email,String gender,String address,Model model) {
-			 		EmployeeEntity employeeEntity=new EmployeeEntity();
+		public String registerEmployee(MultipartFile file,@RequestParam("empid") String pempid,String name,String email,String gender,String address,Model model) throws IOException {
+			
+					byte[] images=file.getBytes();
+					EmployeeEntity employeeEntity=new EmployeeEntity();
+			 		employeeEntity.setPhoto(images);
+			 		
 			 		employeeEntity.setAddress(address);
 			 		employeeEntity.setDoe(new Timestamp(new Date().getTime()));
 			 		employeeEntity.setEmail(email);

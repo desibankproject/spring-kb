@@ -9,6 +9,25 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  
+  <script type="text/javascript">
+	function readURL(input) {
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	            $('#bimage').attr('src', e.target.result);
+	        }
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+  		$(document).ready(function(){
+  			$("#photo").change(function(){
+  			    readURL(this);
+  			});
+  		});	
+  
+  </script>
+  
 </head>
 <body>
 	<div class="container">
@@ -23,7 +42,7 @@
 		<!--
 		http://localhost:8080/spring-kb/ check
 		 -->	
-		<form name="mathform" action="${pageContext.request.contextPath}/register-employee" method="post">
+		<form name="mathform" action="${pageContext.request.contextPath}/register-employee" method="post" enctype="multipart/form-data">
 		<table>
 		
 		<tr>
@@ -67,7 +86,9 @@
 				&nbsp;&nbsp;&nbsp;
 				Photo : 
 				&nbsp;&nbsp;&nbsp;
-				<input type="file" name="photo" style="width: 300px;display: inline;" class="form-control"/>
+				<input type="file" id="photo"  name="file" style="width: 300px;display: inline;" class="form-control"/>
+				    <img id="bimage" src="${pageContext.request.contextPath}/img/createuser.png" class="img-thumbnail" style="height: 60px;"/>
+				
 				</td>
 				<tr>
 			<td>&nbsp;</td>
