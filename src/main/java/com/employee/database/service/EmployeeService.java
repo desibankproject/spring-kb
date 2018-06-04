@@ -2,13 +2,13 @@ package com.employee.database.service;
 
 import java.util.List;
 
-import com.employee.database.dao.EmployeeEntity;
+import com.mvc.web.controller.web.form.EmployeeForm;
 
 public interface EmployeeService {
 
-	public String addEmployee(EmployeeEntity employeeEntity);
+	public String addEmployee(EmployeeForm employeeEntity);
 
-	public List<EmployeeEntity> findEmployee();
+	public List<EmployeeForm> findEmployee();
 
 	public String deleteEmployeeByEmpId(String empid);
 
@@ -16,7 +16,7 @@ public interface EmployeeService {
 
 	public String deleteEmployeeByRowId(String rowid);
 
-	public String updateEmployee(EmployeeEntity employeeEntity);
+	public String updateEmployee(EmployeeForm employeeForm);
 
 	public byte[] findImageRowid(int rowid);
 

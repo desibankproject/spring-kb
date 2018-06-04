@@ -6,21 +6,25 @@
 	
 	<display-name>Mocker</display-name>
 	
+	<error-page>
+			<error-code>404</error-code>
+			<location>/error.jsp</location>
+	</error-page>
+	
 	<!-- 
 		ApplicationContext applicationContext=new ClassPathXmlApplicationContext("employee-service-dao.xml");
 	 -->
 	 <context-param>
 	 		<param-name>contextConfigLocation</param-name>
-	 		<param-value>classpath:employee-service-dao.xml</param-value>
+	 		<param-value>/WEB-INF/spring-context/applicationContext.xml</param-value>
 	 </context-param>
 	 
+	 <!-- 
+	 ApplicationContext context=new ClasspathXmlApplication("pass some xml file.............");
+	  -->
 	<listener>
 			<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>	
 	</listener>
-	
-	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
-	</welcome-file-list>
    
    <!-- 
    Once dispatcher servlet will be loaded then it will read 

@@ -49,6 +49,11 @@ public class AuthController {
 		 EmployeeService employeeService=(EmployeeService)applicationContext.getBean("EmployeServiceImpl");*/
 	}
 	
+	@RequestMapping(value="/auth",method=RequestMethod.GET)
+	public String loginPage(Model model) {
+		 return "login";
+	}
+	
 	//@PostMapping("/auth")
 	@RequestMapping(value="/auth",method=RequestMethod.POST)
 	public String checkString(String username,String password,Model model) {
