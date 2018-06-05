@@ -10,6 +10,46 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  
+  <script>
+  	 function loadData(cselected){
+  	   var contextPath="${pageContext.request.contextPath}";
+			  // window.location.href=contextPath+"/profiles?search="+cselected;
+			  	var url =contextPath+"/jprofiles?search="+cselected;
+		    var promise=window.fetch(url); // GET , POST,DELETE,PUT, PATCH  = Html form  - GET/POST
+		  	promise.then((res) =>res.json()).then((data) =>{
+		  				var tempContent='';
+		  				var count=0;
+						data.forEach((item) => {
+								console.log(item);
+								tempContent=tempContent+'<tr  id="'+item.rowid+'">';
+								tempContent=tempContent+'<td>'+(++count)+'</td>';
+								tempContent=tempContent+'<td>'+item.empid+'</td>';
+								tempContent=tempContent+'<td>'+item.name+'</td>';
+								tempContent=tempContent+'<td>'+item.email+'</td>';
+								tempContent=tempContent+'<td>'+item.gender+'</td>';
+								tempContent=tempContent+'<td>'+item.address+'</td>';
+								tempContent=tempContent+'<td><img src="${pageContext.request.contextPath}/load-image?imageid='+item.rowid+'" style="height: 60px;"/></td>';
+								tempContent=tempContent+'<td><a href="${pageContext.request.contextPath}/deleteEmployee?rowid='+item.rowid+'"><img src="${pageContext.request.contextPath}/img/delete-test-icon.png"/></a>';
+								tempContent=tempContent+'&nbsp;&nbsp;';
+								tempContent=tempContent+'<a href="javascript:openModal('+item.rowid+');"><img src="${pageContext.request.contextPath}/img/edit.png"/></a>';
+								tempContent=tempContent+'</td>';
+								tempContent=tempContent+'</tr>';
+						});
+						$("#dataContent").html(tempContent);
+			 
+			});
+  	 }
+  	  $(document).ready(function(){
+  				loadData("all");
+  		  		
+  				$("#genderfilter").change(function() {
+  		  				  var cselected=$(this).val();
+  		  				  loadData(cselected);
+  		  		});
+  	  });
+  </script>
+  
   <script type="text/javascript">
   		function openModal(rowid) {
   				
@@ -58,8 +98,8 @@
 	 <h4>Employee Profiles</h4>
 	<span style="color:green;font-size: 18px;" id="pmessage">${param.appstatus}</span>
 	<select id="genderfilter" name="Gender" class="form-control" style="width: 30%">
-			<option>Male</option>
-			<option>Female</option>
+			<option ${param.search=='Male'?'selected':''}>Male</option>
+			<option ${param.search=='Female'?'selected':''}>Female</option>
 	</select>
 	<hr/>
   <table class="table table-striped">
@@ -75,8 +115,8 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tbody>
-     <c:forEach items="${employeeEntityList}" var="item" varStatus="counter">
+    <tbody  id="dataContent">
+    <%--  <c:forEach items="${employeeEntityList}" var="item" varStatus="counter">
       <tr  id="${item.rowid}">
         <td>${counter.count}</td>
         <td>${item.empid}</td>
@@ -90,7 +130,7 @@
         <a href="javascript:openModal(${item.rowid});"><img src="${pageContext.request.contextPath}/img/edit.png"/></a>
         </td>
       </tr>
-      </c:forEach>
+      </c:forEach> --%>
      <tr>
         <td>&nbsp;</td>
         <td>&nbsp;</td>

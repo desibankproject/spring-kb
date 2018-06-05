@@ -2,16 +2,22 @@ package com.mvc.web.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.employee.database.service.EmployeeService;
@@ -90,9 +96,34 @@ public class ProfilesController {
 			return "profiles";
 		}
 		
+	@RequestMapping(value="/jprofiles",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody 	public List<EmployeeForm>  prifles(@RequestParam(value="search",required=false) String search) {
+			List<EmployeeForm> employeeEntityList=new ArrayList<EmployeeForm>();
+			employeeEntityList=employeeService.findEmployee();
+			 if(search!=null) {
+				 	if(search.equals("Male")) {
+				 		//Java8 example with stream + filtering
+				 		employeeEntityList=employeeEntityList.stream().filter(item->"Male".equalsIgnoreCase(item.getGender())).collect(Collectors.toList());
+				 	}else if(search.equals("Female")) {
+				 		employeeEntityList=employeeEntityList.stream().filter(item->"Female".equalsIgnoreCase(item.getGender())).collect(Collectors.toList());
+				 	}
+			 }
+			return employeeEntityList;
+		}
+		
 		@GetMapping("/profiles")
-		public String prifles(Model model) {
-			List<EmployeeForm> employeeEntityList=employeeService.findEmployee();
+		public String prifles(@RequestParam(value="search",required=false) String search,Model model) {
+			List<EmployeeForm> employeeEntityList=new ArrayList<EmployeeForm>();
+			employeeEntityList=employeeService.findEmployee();
+			 if(search!=null) {
+				 	if(search.equals("Male")) {
+				 		//Java8 example with stream + filtering
+				 		employeeEntityList=employeeEntityList.stream().filter(item->"Male".equalsIgnoreCase(item.getGender())).collect(Collectors.toList());
+				 	}else if(search.equals("Female")) {
+				 		employeeEntityList=employeeEntityList.stream().filter(item->"Female".equalsIgnoreCase(item.getGender())).collect(Collectors.toList());
+				 	}
+			 }
+			System.out.println(employeeEntityList);
 			model.addAttribute("employeeEntityList", employeeEntityList);
 			return "profiles";
 		}
