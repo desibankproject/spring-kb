@@ -42,7 +42,6 @@
   	 }
   	  $(document).ready(function(){
   				loadData("all");
-  		  		
   				$("#genderfilter").change(function() {
   		  				  var cselected=$(this).val();
   		  				  loadData(cselected);
@@ -98,6 +97,7 @@
 	 <h4>Employee Profiles</h4>
 	<span style="color:green;font-size: 18px;" id="pmessage">${param.appstatus}</span>
 	<select id="genderfilter" name="Gender" class="form-control" style="width: 30%">
+			<option>All</option>
 			<option ${param.search=='Male'?'selected':''}>Male</option>
 			<option ${param.search=='Female'?'selected':''}>Female</option>
 	</select>

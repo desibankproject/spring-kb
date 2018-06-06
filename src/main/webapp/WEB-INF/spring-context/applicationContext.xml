@@ -12,4 +12,6 @@
 		<import resource="employee-dao.xml"/>
 		<import resource="employee-service.xml"/>
 		<import resource="jdbc-data-source.xml"/>
+		<import resource="spring-jdbc-transaction.xml"/>
+		
 </beans>

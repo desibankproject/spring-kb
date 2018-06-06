@@ -1,5 +1,6 @@
 package com.employee.database.dao;
 
+import java.io.IOException;
 import java.sql.Types;
 import java.util.List;
 
@@ -15,6 +16,9 @@ import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Repository("EmployeeDaoImpl")
 @Scope("singleton")
@@ -35,21 +39,28 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 	
 	
+	@Transactional(propagation=Propagation.REQUIRED,rollbackFor=IOException.class,noRollbackFor=NumberFormatException.class,timeout=3000)
 	@Override
 	public String addEmployee(EmployeeEntity employeeEntity) {
+		 boolean b=TransactionSynchronizationManager.isActualTransactionActive();
+		 if(b) {
+			 System.out.println("Ahahah transaction is working here!!!!!!!!!! ");
+		 }else{
+			 System.out.println("sorry transaction is not  enabled!!!!!!!!!! ");
+		 }
 	 	 System.out.println("add employee method is called in dao layer!!!!!!");
 	 	 JdbcTemplate jdbcTemplate=new JdbcTemplate(dataSource);
 	 	 System.out.println(employeeEntity);
-	 	 //
-         
 	 	 LobHandler lobHandler=new DefaultLobHandler();
          SqlLobValue sqlLobValue=new SqlLobValue(employeeEntity.getPhoto(),lobHandler);
-         
          int[] dataType=new int[] { Types.VARCHAR, Types.VARCHAR,
                  Types.VARCHAR, Types.VARCHAR,Types.BLOB,Types.VARCHAR,Types.TIMESTAMP };
-         
 	 	 String sql="insert into employee_tbl(empid,name,email,gender,photo,address,doe) values(?,?,?,?,?,?,?)";
 	 	 Object[] args=new Object[]{employeeEntity.getEmpid(),employeeEntity.getName(),employeeEntity.getEmail(),employeeEntity.getGender(),sqlLobValue,employeeEntity.getAddress(),employeeEntity.getDoe()};
+  	   	 jdbcTemplate.update(sql, args,dataType);
+  	   	 jdbcTemplate.update(sql, args,dataType);
+  	   	 jdbcTemplate.update(sql, args,dataType);
+  	   	 jdbcTemplate.update(sql, args,dataType);
   	   	 jdbcTemplate.update(sql, args,dataType);
 		 return "success";
 	}
