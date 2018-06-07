@@ -28,9 +28,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Autowired
 	@Qualifier("jdbcDataSource")
 	private DataSource dataSource;
-	
+
+	//IllegalTransactionStateException
+	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	@Override
-	public String authUser(String username,String password){
+	public String authUser(String username,String password) {
+		 boolean b=TransactionSynchronizationManager.isActualTransactionActive();
+		 if(b) {
+			 System.out.println("Ahahah transaction is working here!!!!!!!!!! ");
+		 }
 	 	 JdbcTemplate jdbcTemplate=new JdbcTemplate(dataSource);
 	 	 String sql="select count(*) from auth_tbl where username=? and password=?";
 	 	int count=jdbcTemplate.queryForObject(sql, Integer.class,new Object[]{username,password});
@@ -39,7 +45,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 	
 	
-	@Transactional(propagation=Propagation.REQUIRED,rollbackFor=IOException.class,noRollbackFor=NumberFormatException.class,timeout=3000)
+	@Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor=IOException.class,noRollbackFor=NumberFormatException.class,timeout=3000)
 	@Override
 	public String addEmployee(EmployeeEntity employeeEntity) {
 		 boolean b=TransactionSynchronizationManager.isActualTransactionActive();

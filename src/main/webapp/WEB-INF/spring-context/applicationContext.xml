@@ -13,5 +13,5 @@
 		<import resource="employee-service.xml"/>
 		<import resource="jdbc-data-source.xml"/>
 		<import resource="spring-jdbc-transaction.xml"/>
-		
+		<import resource="common-advice.xml"/>
 </beans>
