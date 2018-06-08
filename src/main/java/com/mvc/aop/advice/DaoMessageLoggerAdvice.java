@@ -21,7 +21,6 @@ public class DaoMessageLoggerAdvice {
 		System.out.println("Name of the method which is invoked......" + joinPoint.getSignature().getName());
 		System.out.println("******>>> Method inputs are - "+Arrays.asList(joinPoint.getArgs()));
 		System.out.println("Hey this is method is called at "+new Date());
-		System.out.println("_____________________________________________________");
 	}
 
 }

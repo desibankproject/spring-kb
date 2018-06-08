@@ -20,7 +20,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-@Repository("EmployeeDaoImpl")
+import com.mvc.aop.advice.Lakshmi;
+
+@Repository(value="EmployeeDaoImpl")
 @Scope("singleton")
 @Lazy(false)
 public class EmployeeDaoImpl implements EmployeeDao {
@@ -31,6 +33,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	//IllegalTransactionStateException
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
+	//Annotation is mechanism through we can associate meta data with source code
+	//and this meta data can be processed at compile time, load time and runtime
 	@Override
 	public String authUser(String username,String password) {
 		 boolean b=TransactionSynchronizationManager.isActualTransactionActive();

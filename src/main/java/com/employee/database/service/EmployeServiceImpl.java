@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.employee.database.dao.EmployeeDao;
 import com.employee.database.dao.EmployeeEntity;
+import com.mvc.aop.advice.Lakshmi;
 import com.mvc.web.controller.web.form.EmployeeForm;
 
 @Service("EmployeServiceImpl")
@@ -20,6 +21,7 @@ public class EmployeServiceImpl  implements EmployeeService{
 	private EmployeeDao employeeDao;
 	
 	@Override
+	@Lakshmi
 	 public byte[] findImageRowid(int rowid){
 		return employeeDao.findImageRowid( rowid);
 	 }
