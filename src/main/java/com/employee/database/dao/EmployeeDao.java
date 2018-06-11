@@ -2,6 +2,8 @@ package com.employee.database.dao;
 
 import java.util.List;
 
+import com.employee.database.dao.entity.EmployeeEntity;
+
 public interface EmployeeDao {
 
 	public String addEmployee(EmployeeEntity employeeEntity);

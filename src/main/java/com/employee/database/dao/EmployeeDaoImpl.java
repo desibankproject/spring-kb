@@ -20,8 +20,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import com.mvc.aop.advice.Lakshmi;
+import com.employee.database.dao.entity.EmployeeEntity;
 
+//JPA + Hibernate 
 @Repository(value="EmployeeDaoImpl")
 @Scope("singleton")
 @Lazy(false)

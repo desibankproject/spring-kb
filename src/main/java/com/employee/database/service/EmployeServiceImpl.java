@@ -9,24 +9,39 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.employee.database.dao.EmployeeDao;
-import com.employee.database.dao.EmployeeEntity;
+import com.employee.database.dao.entity.EmployeeEntity;
 import com.mvc.aop.advice.Lakshmi;
 import com.mvc.web.controller.web.form.EmployeeForm;
 
+
+
+/**
+ * 
+ * @author nagendra
+ * 
+ */
 @Service("EmployeServiceImpl")
 public class EmployeServiceImpl  implements EmployeeService{
 	
 	@Autowired
 	@Qualifier("EmployeeDaoImpl")
 	private EmployeeDao employeeDao;
+
+	
+	@Autowired
+	@Qualifier("EmployeeHibernateDaoImpl")
+	private EmployeeDao employeeHibernateDao;
+	
+	
 	
 	@Override
-	@Lakshmi
+	@Lakshmi(value="This is magic of aop....",email="findabc@gmail.com")
 	 public byte[] findImageRowid(int rowid){
 		return employeeDao.findImageRowid( rowid);
 	 }
 	
 	@Override
+	@Lakshmi(value="This is authUser method....",email="authuser@gmail.com")
 	public String authUser(String username,String password){
 		return employeeDao.authUser(username, password);
 	}
@@ -45,7 +60,7 @@ public class EmployeServiceImpl  implements EmployeeService{
 		System.out.println("Service layer addEmployee method is called!");
 		EmployeeEntity employeeEntity=new EmployeeEntity();
 		BeanUtils.copyProperties(employeeForm, employeeEntity);
-		String result=employeeDao.addEmployee(employeeEntity);
+		String result=employeeHibernateDao.addEmployee(employeeEntity);
 		return result;
 	}
 	

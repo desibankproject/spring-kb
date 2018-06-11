@@ -1,8 +1,16 @@
-package com.employee.database.dao;
+package com.employee.database.dao.entity;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="employee_tbl")
 public class EmployeeEntity {
 
 	private int rowid;
@@ -14,6 +22,8 @@ public class EmployeeEntity {
 	private String address;
 	private Timestamp doe;
 
+	@Id
+	@GeneratedValue
 	public int getRowid() {
 		return rowid;
 	}
@@ -22,6 +32,7 @@ public class EmployeeEntity {
 		this.rowid = rowid;
 	}
 
+	@Column(length=100)
 	public String getEmpid() {
 		return empid;
 	}
@@ -30,6 +41,7 @@ public class EmployeeEntity {
 		this.empid = empid;
 	}
 
+	@Column(length=100)
 	public String getName() {
 		return name;
 	}
@@ -38,6 +50,7 @@ public class EmployeeEntity {
 		this.name = name;
 	}
 
+	@Column(length=100)
 	public String getEmail() {
 		return email;
 	}
@@ -46,6 +59,7 @@ public class EmployeeEntity {
 		this.email = email;
 	}
 
+	@Column(length=6)
 	public String getGender() {
 		return gender;
 	}
@@ -54,6 +68,7 @@ public class EmployeeEntity {
 		this.gender = gender;
 	}
 
+	@Column(columnDefinition="longblob")
 	public byte[] getPhoto() {
 		return photo;
 	}
@@ -62,6 +77,7 @@ public class EmployeeEntity {
 		this.photo = photo;
 	}
 
+	@Column(length=200)
 	public String getAddress() {
 		return address;
 	}
