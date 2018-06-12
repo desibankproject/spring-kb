@@ -32,14 +32,15 @@ public class EmployeeHibernateDaoImpl extends HibernateDaoSupport  implements  E
 		//3. connection management
 		//4. transaction management
 		//5. Exception handling
-		getHibernateTemplate().save(employeeEntity);
+		super.getHibernateTemplate().save(employeeEntity);
 		return "success";
 	}
 
 	@Override
 	public List<EmployeeEntity> findEmployee() {
-		// TODO Auto-generated method stub
-		return null;
+		//HQL - SQL  - HQL is database independent ? yes while SQL is database dependent and SQL is also known as native query
+		List<EmployeeEntity> employeeList=(List<EmployeeEntity>)super.getHibernateTemplate().find("from EmployeeEntity");
+		return employeeList;
 	}
 
 	@Override

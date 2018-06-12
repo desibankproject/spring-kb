@@ -67,7 +67,7 @@ public class EmployeServiceImpl  implements EmployeeService{
 	@Override
 	public List<EmployeeForm> findEmployee() {
 		List<EmployeeForm> employeeForms=new ArrayList<EmployeeForm>();
-		List<EmployeeEntity> employeeEntitityList=employeeDao.findEmployee();
+		List<EmployeeEntity> employeeEntitityList=employeeHibernateDao.findEmployee();
 		employeeEntitityList.forEach(entity->{
 			EmployeeForm employeeForm=new EmployeeForm();
 			BeanUtils.copyProperties(entity, employeeForm);

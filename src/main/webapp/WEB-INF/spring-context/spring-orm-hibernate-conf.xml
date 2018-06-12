@@ -13,7 +13,6 @@
        src/main/resources
        -->
     <context:property-placeholder location="classpath:hibernate.properties" />  
-
 	<!-- Hibernate 4 with spring 4.x 
 	LocalSessionFactoryBean is given by spring-orm module!
 	-->

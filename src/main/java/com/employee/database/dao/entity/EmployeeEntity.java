@@ -97,7 +97,7 @@ public class EmployeeEntity {
 	@Override
 	public String toString() {
 		return "EmployeeEntity [rowid=" + rowid + ", empid=" + empid + ", name=" + name + ", email=" + email
-				+ ", gender=" + gender + ", photo=" + Arrays.toString(photo) + ", address=" + address + ", doe=" + doe
+				+ ", gender=" + gender + " address=" + address + ", doe=" + doe
 				+ "]";
 	}
 
