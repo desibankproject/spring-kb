@@ -2,7 +2,9 @@ package com.employee.database.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -40,6 +42,19 @@ public class EmployeeHibernateDaoImpl extends HibernateDaoSupport  implements  E
 	public List<EmployeeEntity> findEmployee() {
 		//HQL - SQL  - HQL is database independent ? yes while SQL is database dependent and SQL is also known as native query
 		List<EmployeeEntity> employeeList=(List<EmployeeEntity>)super.getHibernateTemplate().find("from EmployeeEntity");
+		return employeeList;
+	}
+	
+	@Override
+	public List<EmployeeEntity> findEmployee(int offeset) {
+		//HQL - SQL  - HQL is database independent ? yes while SQL is database dependent and SQL is also known as native query
+		//List<EmployeeEntity> employeeList=(List<EmployeeEntity>)super.getHibernateTemplate().find("from EmployeeEntity");
+		System.out.println(")#)#)#)#)#ahaha it is working@");
+		//select  * from laptops_tbl limit 0,5
+		// 0 1 2 3 4
+		//select  * from laptops_tbl limit 5,5
+		DetachedCriteria criteria = DetachedCriteria.forClass(EmployeeEntity.class);
+		List<EmployeeEntity>employeeList =(List<EmployeeEntity>)getHibernateTemplate().findByCriteria(criteria, offeset, 5);
 		return employeeList;
 	}
 

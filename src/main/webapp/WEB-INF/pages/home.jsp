@@ -11,6 +11,6 @@
 <h1>This page is under the construction!!!!!!!!!!!!!!!!!!!!!!!</h1>
 <img src="img/add-product-icon.png"/>
 	
-
+<a href="${pageContext.request.contextPath}/profiles"><img src="${pageContext.request.contextPath}/img/createuser.png" style="height: 80px;" /></a>
 </body>
 </html>

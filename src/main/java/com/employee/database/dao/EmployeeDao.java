@@ -20,4 +20,8 @@ public interface EmployeeDao {
 
 	 public byte[] findImageRowid(int rowid);
 
+	 default public List<EmployeeEntity> findEmployee(int offeset) {
+		 return null;
+	 }
+
 }

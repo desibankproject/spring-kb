@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.magic.com/mobile"
+	xmlns:tns="http://www.magic.com/mobile" elementFormDefault="qualified">
+	
+	 <element name="mobile" type="tns:Mobile"/> 
+	 <element name="tmobile" type="tns:Mobile"/> 
+
+	 <complexType name="Mobile">
+	 		<sequence>
+	 			  <element name="name" type="string"/>
+	 			  <element name="version" type="string"/>
+	 			  <element name="price" type="float"/>
+	 			  <element name="memory" type="string" minOccurs="1" maxOccurs="2"/>
+	 			  <element name="color" type="string"/>
+	 			    <element name="description" type="string" maxOccurs="1" minOccurs="0"/>
+	 		</sequence>
+	 </complexType>
+	
+</schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mobile xmlns="http://www.magic.com/mobile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.magic.com/mobile mobile.xsd ">
+	<name>iPhone</name>
+	<version>X</version>
+	<price>9202</price>
+	<memory>32GB</memory>
+	<memory>16GB</memory>
+	<color>white</color>
+	<description>iPhone really very nice mobile phone!</description>
+</mobile>

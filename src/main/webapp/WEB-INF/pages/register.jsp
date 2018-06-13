@@ -36,7 +36,6 @@
 		</header>
 	<hr/>	
 	<img src="${pageContext.request.contextPath}/img/users_delete.png" style="height: 80px;margin-right: 50px;" />
-	<a href="${pageContext.request.contextPath}/profiles"><img src="${pageContext.request.contextPath}/img/createuser.png" style="height: 80px;" /></a>
 	<hr />
 	<section>
 		<!--
