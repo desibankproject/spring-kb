@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tns:mobile xmlns:tns="http://www.magic.com/mobile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.magic.com/mobile mobile.xsd ">
-  <tns:name>tns:name</tns:name>
-  <tns:version>tns:version</tns:version>
-  <tns:price>0.0</tns:price>
-  <tns:memory>tns:memory</tns:memory>
-  <tns:color>tns:color</tns:color>
-</tns:mobile>
