@@ -9,5 +9,12 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+	<import resource="employee-dao.xml"/>
+		<import resource="employee-service.xml"/>
+		<import resource="jdbc-data-source.xml"/>
+		<import resource="spring-jdbc-transaction.xml"/>
+		<import resource="common-advice.xml"/>
+		<import resource="spring-orm-hibernate-conf.xml"/>
+		<import resource="spring4-hibernate-tx.xml"/>
 		
 </beans>

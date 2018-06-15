@@ -23,5 +23,9 @@ public interface EmployeeDao {
 	 default public List<EmployeeEntity> findEmployee(int offeset) {
 		 return null;
 	 }
+	 
+	 default public EmployeeEntity findEmployeeByEmpid(String empid) {
+		 return null;
+	 }
 
 }

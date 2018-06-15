@@ -20,4 +20,6 @@ public interface EmployeeService {
 
 	public byte[] findImageRowid(int rowid);
 
+	public EmployeeForm findEmployeeByEmpid(String empid);
+
 }

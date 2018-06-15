@@ -51,7 +51,7 @@ public class EmployeServiceImpl  implements EmployeeService{
 		System.out.println("Service layer updateEmployee method is called!");
 		EmployeeEntity employeeEntity=new EmployeeEntity();
 		BeanUtils.copyProperties(employeeForm, employeeEntity);
-		String result=employeeDao.updateEmployee(employeeEntity);
+		String result=employeeHibernateDao.updateEmployee(employeeEntity);
 		return result;
 	}
 	
@@ -65,12 +65,22 @@ public class EmployeServiceImpl  implements EmployeeService{
 	}
 	
 	@Override
+	public EmployeeForm findEmployeeByEmpid(String empid) {
+			EmployeeEntity employeeEntity=employeeHibernateDao.findEmployeeByEmpid(empid);
+			EmployeeForm employeeForm=new EmployeeForm();
+			BeanUtils.copyProperties(employeeEntity, employeeForm);
+			employeeForm.setPhoto(null);
+			return employeeForm;
+	}
+	
+	@Override
 	public List<EmployeeForm> findEmployee() {
 		List<EmployeeForm> employeeForms=new ArrayList<EmployeeForm>();
 		List<EmployeeEntity> employeeEntitityList=employeeHibernateDao.findEmployee();
 		employeeEntitityList.forEach(entity->{
 			EmployeeForm employeeForm=new EmployeeForm();
 			BeanUtils.copyProperties(entity, employeeForm);
+			employeeForm.setPhoto(null);
 			employeeForms.add(employeeForm);
 		});
 		return employeeForms;

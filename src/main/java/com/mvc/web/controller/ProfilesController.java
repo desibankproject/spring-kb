@@ -96,21 +96,6 @@ public class ProfilesController {
 			return "profiles";
 		}
 		
-	@RequestMapping(value="/jprofiles",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody 	public List<EmployeeForm>  prifles(@RequestParam(value="search",required=false) String search) {
-			List<EmployeeForm> employeeEntityList=new ArrayList<EmployeeForm>();
-			employeeEntityList=employeeService.findEmployee();
-			 if(search!=null) {
-				 	if(search.equals("Male")) {
-				 		//Java8 example with stream + filtering
-				 		employeeEntityList=employeeEntityList.stream().filter(item->"Male".equalsIgnoreCase(item.getGender())).collect(Collectors.toList());
-				 	}else if(search.equals("Female")) {
-				 		employeeEntityList=employeeEntityList.stream().filter(item->"Female".equalsIgnoreCase(item.getGender())).collect(Collectors.toList());
-				 	}
-			 }
-			return employeeEntityList;
-		}
-		
 		@GetMapping("/profiles")
 		public String prifles(@RequestParam(value="search",required=false) String search,Model model) {
 			List<EmployeeForm> employeeEntityList=new ArrayList<EmployeeForm>();

@@ -1,17 +1,28 @@
 package com.mvc.web.controller.web.form;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@XmlRootElement
+@JsonInclude(value=Include.NON_NULL)
 public class EmployeeForm {
 
 	private int rowid;
+	//@JsonIgnore
 	private String empid;
 	private String name;
 	private String email;
 	private String gender;
 	private byte[] photo;
 	private String address;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private Timestamp doe;
 
 	public int getRowid() {

@@ -2,7 +2,6 @@ package com.employee.database.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,15 @@ public class EmployeeHibernateDaoImpl extends HibernateDaoSupport  implements  E
 	public void setSpringManageSessionFactory(SessionFactory sessionFactory){
 	    super.setSessionFactory(sessionFactory);
 	}
+	@Override
+	public String updateEmployee(EmployeeEntity employeeEntity) {
+		EmployeeEntity demployeeEntity=super.getHibernateTemplate().get(EmployeeEntity.class, employeeEntity.getRowid());
+		demployeeEntity.setAddress(employeeEntity.getAddress());
+		demployeeEntity.setEmail(employeeEntity.getEmail());
+		demployeeEntity.setGender(employeeEntity.getGender());
+		demployeeEntity.setName(employeeEntity.getName());
+		return "success";
+	}
 
 	@Override
 	public String addEmployee(EmployeeEntity employeeEntity) {
@@ -36,6 +44,17 @@ public class EmployeeHibernateDaoImpl extends HibernateDaoSupport  implements  E
 		//5. Exception handling
 		super.getHibernateTemplate().save(employeeEntity);
 		return "success";
+	}
+	
+	@Override
+	public EmployeeEntity findEmployeeByEmpid(String empid) {
+		//HQL - SQL  - HQL is database independent ? yes while SQL is database dependent and SQL is also known as native query
+		List<EmployeeEntity> employeeList=(List<EmployeeEntity>)super.getHibernateTemplate().find("from EmployeeEntity where empid=?",empid);
+		EmployeeEntity employeeEntity=new EmployeeEntity();
+		if(employeeList.size()>0){
+			employeeEntity=employeeList.get(0);
+		}
+		return employeeEntity;
 	}
 
 	@Override
@@ -76,11 +95,7 @@ public class EmployeeHibernateDaoImpl extends HibernateDaoSupport  implements  E
 		return null;
 	}
 
-	@Override
-	public String updateEmployee(EmployeeEntity employeeEntity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public byte[] findImageRowid(int rowid) {
