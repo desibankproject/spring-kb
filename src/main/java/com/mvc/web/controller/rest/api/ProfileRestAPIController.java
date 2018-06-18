@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.employee.database.service.EmployeeService;
+import com.mvc.web.controller.rest.api.exception.EmployeeDoesNotExistException;
+import com.mvc.web.controller.rest.api.util.AppRestConstant;
 import com.mvc.web.controller.web.form.EmployeeForm;
 import com.mvc.web.controller.web.form.EmployeeList;
 
 @Controller
+@RequestMapping(AppRestConstant.REST_V3_API)
 public class ProfileRestAPIController {
 	
 	@Autowired
@@ -28,7 +31,7 @@ public class ProfileRestAPIController {
 	
 	
 	//This will create new resource
-		//http://localhost/spring-kb/jprofiles
+		//http://localhost/spring-kb/v3/jprofiles
 		@RequestMapping(value="/jprofiles",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE,
 					produces={MediaType.APPLICATION_JSON_VALUE})
 		@ResponseBody 	public ApplicationMessageResponse  updateProfile(@RequestBody EmployeeForm employeeForm) {
@@ -47,13 +50,13 @@ public class ProfileRestAPIController {
 			String status=employeeService.addEmployee(employeeForm);
 			ApplicationMessageResponse applicationMessageResponse=new ApplicationMessageResponse();
 			applicationMessageResponse.setStatus(status);
+			applicationMessageResponse.setUri("http://localhost/spring-kb/jprofiles");
 			applicationMessageResponse.setMessage("profile is uploaded successfully into the data store");
 			return applicationMessageResponse;
 	}
 	
 	//http://localhost/spring-kb/jprofiles
-	@RequestMapping(value="/jprofiles",method=RequestMethod.GET,
-			produces={MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(value="/jprofiles",method=RequestMethod.GET)
 	@ResponseBody 	public EmployeeList  prifles(@RequestParam(value="search",
 		required=false) String search) {
 			List<EmployeeForm> employeeEntityList=new ArrayList<EmployeeForm>();
@@ -77,6 +80,10 @@ public class ProfileRestAPIController {
 				produces={MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 		@ResponseBody 	public EmployeeForm  findEmployeeByEmpid(@PathVariable(value="pempid") String pempid) {
 				EmployeeForm employeeForm=employeeService.findEmployeeByEmpid(pempid);
+				if(employeeForm.getEmpid()==null){
+					EmployeeDoesNotExistException exception=new EmployeeDoesNotExistException("Hey this empid "+pempid+" does not exist into out database!");
+					throw exception;
+				}
 				return employeeForm;
 			}
 

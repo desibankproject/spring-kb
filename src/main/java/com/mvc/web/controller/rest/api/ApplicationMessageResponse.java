@@ -1,9 +1,18 @@
 package com.mvc.web.controller.rest.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(value=Include.NON_NULL)
 public class ApplicationMessageResponse {
 	private String status;
+	@JsonProperty(value="magicmessage")
 	private String message;
+
 	private String exception;
+	@JsonIgnore
 	private String uri;
 
 	public String getStatus() {

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Servlet Filter implementation class SessionManagementFilter
+ * 
  */
 public class SessionManagementFilter implements Filter {
 
