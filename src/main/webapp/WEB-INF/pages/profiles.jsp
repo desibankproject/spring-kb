@@ -12,15 +12,24 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   
   <script>
+  var contextPath="${pageContext.request.contextPath}";
   	 function loadData(cselected){
-  	   var contextPath="${pageContext.request.contextPath}";
 			  // window.location.href=contextPath+"/profiles?search="+cselected;
-			  	var url =contextPath+"/jprofiles?search="+cselected;
-		    var promise=window.fetch(url); // GET , POST,DELETE,PUT, PATCH  = Html form  - GET/POST
+			  	var url =contextPath+"/v3/jprofiles?search="+cselected;
+		    //var promise=window.fetch(url); // GET , POST,DELETE,PUT, PATCH  = Html form  - GET/POST
+		    ///var promise = fetch(new Request(url, { method: 'GET', cache: 'reload',Accept:'application/json'}));
+		    var promise =fetch(url, {  
+		        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+		        headers: {
+		          'content-type': 'application/json',
+		       	  'Accept': 'application/json'
+		        },
+		        method: 'GET' // *GET, POST, PUT, DELETE, etc.
+		      });
 		  	promise.then((res) =>res.json()).then((data) =>{
 		  				var tempContent='';
 		  				var count=0;
-						data.forEach((item) => {
+						data.employeeForms.forEach((item) => {
 								console.log(item);
 								tempContent=tempContent+'<tr  id="'+item.rowid+'">';
 								tempContent=tempContent+'<td>'+(++count)+'</td>';
@@ -46,10 +55,49 @@
   		  				  var cselected=$(this).val();
   		  				  loadData(cselected);
   		  		});
+  				
+  				$("#addProfile").click(function() {
+  				 	var url =contextPath+"/v3/jprofiles";
+  				    //method= POST
+  				    //Accept , ContentType = json
+  				    //Reading form data which id is addEmployeeForm and converting into JSON string..
+  				    var jdata=$("#addEmployeeForm").serializeArray();
+  			   		var jsonData = {};
+  					jdata.forEach((item) => {
+  						jsonData[item.name]=item.value;
+  			   		}); 	
+  			   		 //for(var x=0;x<jdata.length;x++){
+  			   			//	var name=jdata[x].name;
+  			   			//	var value=jdata[x].value;
+  			   			//	jsonData[name]=value;
+  			   			    //jsonData.name=value;
+  			   			   //json string - JavaScript object - JSON.parse();
+  			   			   //JavaScript object   - json string - JSON.stringify();
+  			   	//	 }
+  				    var promise =fetch(url, {  
+  				    	body: JSON.stringify(jsonData),
+  				        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+  				        headers: {
+  				          'content-type': 'application/json',
+  				       	  'Accept': 'application/json'
+  				        },
+  				        method: 'POST' // *GET, POST, PUT, DELETE, etc.
+  				      });
+  				  	promise.then((res) =>res.json()).then((data) =>{
+  							$("#pmessage").html(data);
+  							$('#addEmployeeModal').modal('hide'); 
+  				  	});
+  				});
+  				
   	  });
   </script>
   
   <script type="text/javascript">
+  		
+		function openAddEmployeeModal() {
+			$('#addEmployeeModal').modal('show'); 
+		}
+  
   		function openModal(rowid) {
   				
 	  			var row = document.getElementById(rowid);
@@ -96,11 +144,12 @@
 	<section>
 	 <h4>Employee Profiles</h4>
 	<span style="color:green;font-size: 18px;" id="pmessage">${param.appstatus}</span>
-	<select id="genderfilter" name="Gender" class="form-control" style="width: 30%">
+	<select id="genderfilter" name="Gender" class="form-control" style="width: 30%;display: inline;">
 			<option>All</option>
 			<option ${param.search=='Male'?'selected':''}>Male</option>
 			<option ${param.search=='Female'?'selected':''}>Female</option>
 	</select>
+	<a href="javascript:openAddEmployeeModal();"><img src="${pageContext.request.contextPath}/img/add-profile.png" style="height: 80px;float:right;"></a>
 	<hr/>
   <table class="table table-striped">
     <thead>
@@ -210,6 +259,58 @@
 									  </div>
 									      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
          					<button type="submit" class="btn btn-primary"   id="updateProductBt">Update</button>
+									  
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="addEmployeeModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 700px;background-image: url('img/backgrounds.jpg');">
+      <!-- Modal Header -->
+      <div class="modal-header">
+              <h4 class="modal-title"><span id="pagetitle">Add Employee Profile</span>
+               <img src="img/profile.png" style="height: 40px;">
+              </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <span style="color:red;font-size: 18px;" id="pmessage">${param.appstatus}</span>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+     						<form  id="addEmployeeForm"  name="addEmployeeForm">
+									  <div class="form-group">
+									    <label for="empid">Empid</label>
+									 	   <input type="text" class="form-control" id="empid" name="empid">
+									  </div>
+									  
+									  <div class="form-group">
+									    <label for="name">Name:</label>
+									    <input type="text" class="form-control" id="name" name="name">
+									  </div>
+									  
+									    
+									  <div class="form-group">
+									    <label for="email">email:</label>
+									    <input type="email" class="form-control" id="email" name="email">
+									  </div>
+									  	  
+									   <div class="form-group">
+									    <label for="address">Gender:</label>
+									    	<select class="form-control" id="gender" name="gender">
+									    			<option>Male</option>
+									    			<option>Female</option>
+									    	</select>
+									  </div>
+									  
+									  <div class="form-group">
+									    <label for="address">address:</label>
+									 <textarea name="address" cols="50" rows="2"  id="address"  class="form-control"></textarea>
+									  </div>
+									      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+         					<button type="button" class="btn btn-primary"   id="addProfile">Add Profile</button>
 									  
 		</form>
       </div>

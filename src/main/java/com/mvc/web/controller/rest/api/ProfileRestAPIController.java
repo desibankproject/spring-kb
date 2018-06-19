@@ -56,7 +56,7 @@ public class ProfileRestAPIController {
 	}
 	
 	//http://localhost/spring-kb/jprofiles
-	@RequestMapping(value="/jprofiles",method=RequestMethod.GET)
+	@RequestMapping(value="/jprofiles",method=RequestMethod.GET,produces={MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	@ResponseBody 	public EmployeeList  prifles(@RequestParam(value="search",
 		required=false) String search) {
 			List<EmployeeForm> employeeEntityList=new ArrayList<EmployeeForm>();

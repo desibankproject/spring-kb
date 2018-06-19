@@ -27,7 +27,11 @@ public class ImageLoaderController {
 		//I want to send image as response
 		response.setContentType("image/png");
 		byte[] image=employeeService.findImageRowid(rowid);
+		if(image==null){
+			image=new byte[]{};
+		}
 		ServletOutputStream  sos=response.getOutputStream();
+		if(image!=null)
 		sos.write(image);
 		sos.flush();
 		sos.close();
