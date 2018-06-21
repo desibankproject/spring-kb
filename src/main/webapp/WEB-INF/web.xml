@@ -19,7 +19,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
     <multipart-config>
-      <location>C:/Users/VC1/workspace_multimodule/spring-kb/src/main/webapp/temp</location>
+      <location>/opt/adt</location>
       <max-file-size>5242880</max-file-size>
       <max-request-size>20971520</max-request-size>
       <file-size-threshold>0</file-size-threshold>
