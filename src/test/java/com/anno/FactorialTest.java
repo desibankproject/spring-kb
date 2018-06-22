@@ -2,6 +2,8 @@ package com.anno;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -11,6 +13,17 @@ import org.junit.Test;
  *
  */
 public class FactorialTest {
+	
+	
+	public FactorialTest() {
+		 System.out.println("this cons is called for FactorialTest");
+	}
+	
+	
+	@Before
+	public void againTAgain(){
+		System.out.println("Good morning.........................");
+	}
 
 	@Test
 	public void testCalFactWhenInputZero() {
@@ -45,6 +58,7 @@ public class FactorialTest {
 	}
 
 	//This is called negative test .. test case where your actual method is failing
+	@Ignore
 	@Test(expected=RuntimeException.class)
 	public void testCalFactWhenInputNegative() {
 		   Factorial factorial=new Factorial(-2);
