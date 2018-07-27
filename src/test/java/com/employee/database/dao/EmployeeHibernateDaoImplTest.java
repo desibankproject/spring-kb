@@ -1,4 +1,4 @@
-package com.employee.database.dao;
+/*package com.employee.database.dao;
 
 import static org.junit.Assert.*;
 
@@ -96,3 +96,4 @@ public class EmployeeHibernateDaoImplTest {
 	}
 
 }
+*/

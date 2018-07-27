@@ -1,9 +1,20 @@
 package com.mvc.web.controller.rest.api;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializerProvider;
+import org.codehaus.jackson.map.ser.BeanPropertyFilter;
+import org.codehaus.jackson.map.ser.BeanPropertyWriter;
+import org.codehaus.jackson.map.ser.FilterProvider;
+import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
+import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -16,10 +27,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.employee.database.service.EmployeeService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mvc.web.controller.rest.api.exception.EmployeeDoesNotExistException;
 import com.mvc.web.controller.rest.api.util.AppRestConstant;
 import com.mvc.web.controller.web.form.EmployeeForm;
 import com.mvc.web.controller.web.form.EmployeeList;
+import com.mvc.web.controller.web.form.EmployeeSerializer;
 
 @Controller
 @RequestMapping(AppRestConstant.REST_V3_API)
@@ -46,8 +60,42 @@ public class ProfileRestAPIController {
 	//http://localhost/spring-kb/jprofiles
 	@RequestMapping(value="/jprofiles",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,
 				produces={MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody 	public ApplicationMessageResponse  uploadProfile(@RequestBody EmployeeForm employeeForm) {
+	@ResponseBody 	public ApplicationMessageResponse  uploadProfile(@RequestBody EmployeeForm employeeForm) throws JsonGenerationException, JsonMappingException, IOException {
 			String status=employeeService.addEmployee(employeeForm);
+			//Convert object to JSON string
+			/*ObjectMapper mapper = new ObjectMapper();
+			 FilterProvider filters = new SimpleFilterProvider()
+		             .addFilter("filter properties by field names",
+		                 SimpleBeanPropertyFilter.serializeAllExcept(new String[]{"name"}));
+		       ObjectWriter writer = mapper.writer().withFilters(filters);
+		       String jsonInStringText=writer.writeValueAsString(employeeForm);
+		       System.out.println(jsonInStringText);*/
+			 Gson gson = new GsonBuilder().create();
+			 gson = new GsonBuilder()
+		                .registerTypeAdapter(EmployeeForm.class, new EmployeeSerializer())
+		                .create();
+			 String jsonData = gson.toJson(employeeForm);
+			 System.out.println(jsonData);
+			 
+			 System.out.println(employeeForm);
+			 BeanPropertyFilter theFilter = new SimpleBeanPropertyFilter() {
+				@Override
+				public void serializeAsField(Object pojo, JsonGenerator jgen, SerializerProvider provider,
+						BeanPropertyWriter writer) throws Exception {
+					// TODO Auto-generated method stub
+						System.out.println("output = "+writer.getName());	
+				         if (!writer.getName().equals("name")) {
+				            writer.serializeAsField(pojo, jgen, provider);
+				            return;
+				         }
+				        
+					}
+				};
+				FilterProvider filters = new SimpleFilterProvider().addFilter("myFilter", theFilter);
+				ObjectMapper mapper = new ObjectMapper();
+				String dtoAsString = mapper.writer(filters).writeValueAsString(employeeForm);
+				 System.out.println(dtoAsString);
+			
 			ApplicationMessageResponse applicationMessageResponse=new ApplicationMessageResponse();
 			applicationMessageResponse.setStatus(status);
 			applicationMessageResponse.setUri("http://localhost/spring-kb/jprofiles");
