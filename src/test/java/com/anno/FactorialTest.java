@@ -51,7 +51,7 @@ public class FactorialTest {
 	
 	@Test
 	public void testCalFactWhenInputSix() {
-		   Factorial factorial=null;
+		  Factorial factorial=new Factorial(6);
 		   int fact=factorial.calFact();
 		   assertEquals(720, fact);
 		//fail("Not yet implemented");
